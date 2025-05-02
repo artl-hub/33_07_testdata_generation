@@ -27,7 +27,8 @@ public class PracticeFormPage {
             stateCityWrapper = $("#stateCity-wrapper"),
             citySelect = $("#city"),
             submitButton = $("#submit"),
-            modalWindow = $(".modal-title.h4");
+            modalWindow = $(".modal-title.h4"),
+            closeModalWindowButton = $("#closeLargeModal");
 
     CalendarComponent calendarComponent = new CalendarComponent();
     CheckResultComponent checkResultComponent = new CheckResultComponent();
@@ -112,6 +113,8 @@ public class PracticeFormPage {
         return this;
     }
 
+
+
     public PracticeFormPage cityClick() {
         citySelect.click();
         return this;
@@ -128,15 +131,25 @@ public class PracticeFormPage {
     }
 
 
-    public PracticeFormPage checkResult(String key, String value) {
-        checkResultComponent.checkResult(key, value);
+//    public PracticeFormPage checkResult(String key, String value) {
+//        checkResultComponent.checkResult(key, value);
+//
+//        return this;
+//    }
 
+    public PracticeFormPage checkResult(String key, String... values) {
+        String expectedValue = String.join(" ", values); // объединяет все значения
+        checkResultComponent.checkResult(key, expectedValue);
         return this;
     }
 
     public PracticeFormPage modalWindowShouldNotExist() {
         modalWindow.shouldNot(exist);
+        return this;
+    }
 
+    public PracticeFormPage closeModalWindow() {
+        closeModalWindowButton.click();
         return this;
     }
 

@@ -1,104 +1,91 @@
 package tests;
 
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 import pages.PracticeFormPage;
-
-import java.util.Locale;
-
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import utils.RandomUtils;
 
 public class PracticeFormWithGeneratedDataTest extends TestBase {
 
     PracticeFormPage practiceFormPage = new PracticeFormPage();
+    RandomUtils randomUtils = new RandomUtils();
 
     @Test
     void successfulRegistrationTest() {
-        Faker faker = new Faker(new Locale("en-GB"));
-
-        String firstName = faker.name().firstName();
-        String lastName = faker.name().lastName();
-        String userEmail = faker.internet().emailAddress();
-
-        String streetAddress = faker.address().streetAddress();
-        String Male = faker.
-
         practiceFormPage
                 .openPage()
                 .removeBanners()
-                .setFirstName(firstName)
-                .setLastName(lastName)
-                .setEmail(userEmail)
-                .setGender(Male)
-                .setUserNumber("3216549877")
-                .setDateOfBirth("30", "May", "2000")
-                .setSubject("Math")
-                .setHobbies("Sports")
-                .uploadFile("logo_demo_qa.png")
-                .setAddress(streetAddress)
+                .setFirstName(randomUtils.firstName)
+                .setLastName(randomUtils.lastName)
+                .setEmail(randomUtils.userEmail)
+                .setGender(randomUtils.gender)
+                .setUserNumber(randomUtils.userNumber)
+                .setDateOfBirth(randomUtils.birthDay, randomUtils.birthMonth, randomUtils.birthYear)
+                .setSubject(randomUtils.subject)
+                .setHobbies(randomUtils.hobbies)
+                .uploadFile(randomUtils.uploadFile)
+                .setAddress(randomUtils.streetAddress)
                 .scrollToBottom()
                 .stateClick()
-                .setState("Uttar Pradesh")
+                .setState(randomUtils.state)
                 .cityClick()
-                .setCity("Agra")
+                .setCity(randomUtils.city)
                 .submitClick()
-                .checkResult("Student Name", "Alex Smith")
-                .checkResult("Student Email", "alex@gmail.com")
-                .checkResult("Gender", "Male")
-                .checkResult("Mobile", "3216549877")
-                .checkResult("Date of Birth", "30 May,2000")
-                .checkResult("Subjects", "Math")
-                .checkResult("Hobbies", "Sports")
-                .checkResult("Picture", "logo_demo_qa.png")
-                .checkResult("Address", "Unterdenlinden 12")
-                .checkResult("State and City", "Uttar Pradesh Agra");
+                .checkResult("Student Name", randomUtils.firstName)
+                .checkResult("Student Email", randomUtils.userEmail)
+                .checkResult("Gender", randomUtils.gender)
+                .checkResult("Mobile", randomUtils.userNumber)
+                .checkResult("Date of Birth", randomUtils.checkDateOfBirth)
+                .checkResult("Subjects", randomUtils.subject)
+                .checkResult("Hobbies", randomUtils.hobbies)
+                .checkResult("Picture", randomUtils.uploadFile)
+                .checkResult("Address", randomUtils.streetAddress)
+                .checkResult("State and City", randomUtils.state, randomUtils.city)
+                .closeModalWindow()
+                .modalWindowShouldNotExist();
     }
 
     @Test
     void successfulRegistrationMinimalDataTest() {
-
         practiceFormPage
                 .openPage()
                 .removeBanners()
-                .setFirstName("Alex")
-                .setLastName("Smith")
-                .setEmail("alex@gmail.com")
-                .setGender("Male")
-                .setUserNumber("3216549877")
-                .setDateOfBirth("30", "May", "2000")
-                .setAddress("Unterdenlinden 12")
-                .setHobbies("Sports")
+                .setFirstName(randomUtils.firstName)
+                .setLastName(randomUtils.lastName)
+                .setEmail(randomUtils.userEmail)
+                .setGender(randomUtils.gender)
+                .setUserNumber(randomUtils.userNumber)
+                .setDateOfBirth(randomUtils.birthDay, randomUtils.birthMonth, randomUtils.birthYear)
+                .setAddress(randomUtils.streetAddress)
+                .setHobbies(randomUtils.hobbies)
                 .scrollToBottom()
                 .submitClick()
-                .checkResult("Student Name", "Alex Smith")
-                .checkResult("Student Email", "alex@gmail.com")
-                .checkResult("Gender", "Male")
-                .checkResult("Mobile", "3216549877")
-                .checkResult("Date of Birth", "30 May,2000")
-                .checkResult("Hobbies", "Sports")
-                .checkResult("Address", "Unterdenlinden 12");
+                .checkResult("Student Name", randomUtils.firstName)
+                .checkResult("Student Email", randomUtils.userEmail)
+                .checkResult("Gender", randomUtils.gender)
+                .checkResult("Mobile", randomUtils.userNumber)
+                .checkResult("Date of Birth", randomUtils.checkDateOfBirth)
+                .checkResult("Hobbies", randomUtils.hobbies)
+                .checkResult("Address", randomUtils.streetAddress)
+                .closeModalWindow()
+                .modalWindowShouldNotExist();
     }
 
     @Test
     void shouldNotRegisterWithoutPhoneNumberTest() {
-
         practiceFormPage
                 .openPage()
                 .removeBanners()
-                .setFirstName("Alex")
-                .setLastName("Smith")
-                .setEmail("alex@gmail.com")
-                .setGender("Male")
+                .setFirstName(randomUtils.firstName)
+                .setLastName(randomUtils.lastName)
+                .setEmail(randomUtils.userEmail)
+                .setGender(randomUtils.gender)
                 .setUserNumber("")
-                .setDateOfBirth("30", "May", "2000")
-                .setAddress("Unterdenlinden 12")
-                .setHobbies("Sports")
+                .setDateOfBirth(randomUtils.birthDay, randomUtils.birthMonth, randomUtils.birthYear)
+                .setAddress(randomUtils.streetAddress)
+                .setHobbies(randomUtils.hobbies)
                 .scrollToBottom()
                 .submitClick()
                 .modalWindowShouldNotExist();
     }
-
-
 }
 
