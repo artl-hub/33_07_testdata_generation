@@ -3,6 +3,7 @@ package tests;
 import org.junit.jupiter.api.Test;
 import pages.PracticeFormPage;
 import utils.RandomUtils;
+import utils.TestData;
 
 public class PracticeFormWithGeneratedDataTest extends TestBase {
 
@@ -11,78 +12,83 @@ public class PracticeFormWithGeneratedDataTest extends TestBase {
 
     @Test
     void successfulRegistrationTest() {
+        TestData data = new TestData();
+
         practiceFormPage
                 .openPage()
                 .removeBanners()
-                .setFirstName(randomUtils.firstName)
-                .setLastName(randomUtils.lastName)
-                .setEmail(randomUtils.userEmail)
-                .setGender(randomUtils.gender)
-                .setUserNumber(randomUtils.userNumber)
-                .setDateOfBirth(randomUtils.birthDay, randomUtils.birthMonth, randomUtils.birthYear)
-                .setSubject(randomUtils.subject)
-                .setHobbies(randomUtils.hobbies)
-                .uploadFile(randomUtils.uploadFile)
-                .setAddress(randomUtils.streetAddress)
+                .setFirstName(data.firstName)
+                .setLastName(data.lastName)
+                .setEmail(data.email)
+                .setGender(data.gender)
+                .setUserNumber(data.userNumber)
+                .setDateOfBirth(data.birthDay, data.birthMonth, data.birthYear)
+                .setSubject(data.subject)
+                .setHobbies(data.hobby)
+                .uploadFile(data.uploadFile)
+                .setAddress(data.address)
                 .scrollToBottom()
                 .stateClick()
-                .setState(randomUtils.state)
+                .setState(data.state)
                 .cityClick()
-                .setCity(randomUtils.city)
+                .setCity(data.city)
                 .submitClick()
-                .checkResult("Student Name", randomUtils.firstName)
-                .checkResult("Student Email", randomUtils.userEmail)
-                .checkResult("Gender", randomUtils.gender)
-                .checkResult("Mobile", randomUtils.userNumber)
-                .checkResult("Date of Birth", randomUtils.checkDateOfBirth)
-                .checkResult("Subjects", randomUtils.subject)
-                .checkResult("Hobbies", randomUtils.hobbies)
-                .checkResult("Picture", randomUtils.uploadFile)
-                .checkResult("Address", randomUtils.streetAddress)
-                .checkResult("State and City", randomUtils.state, randomUtils.city)
+                .checkResult("Student Name", data.firstName + " " + data.lastName)
+                .checkResult("Student Email", data.email)
+                .checkResult("Gender", data.gender)
+                .checkResult("Mobile", data.userNumber)
+                .checkResult("Date of Birth", data.checkDateOfBirth)
+                .checkResult("Subjects", data.subject)
+                .checkResult("Hobbies", data.hobby)
+                .checkResult("Picture", data.uploadFile)
+                .checkResult("Address", data.address)
+                .checkResult("State and City", data.state + " " + data.city)
                 .closeModalWindow()
                 .modalWindowShouldNotExist();
     }
 
     @Test
     void successfulRegistrationMinimalDataTest() {
+        TestData data = new TestData();
+
         practiceFormPage
                 .openPage()
                 .removeBanners()
-                .setFirstName(randomUtils.firstName)
-                .setLastName(randomUtils.lastName)
-                .setEmail(randomUtils.userEmail)
-                .setGender(randomUtils.gender)
-                .setUserNumber(randomUtils.userNumber)
-                .setDateOfBirth(randomUtils.birthDay, randomUtils.birthMonth, randomUtils.birthYear)
-                .setAddress(randomUtils.streetAddress)
-                .setHobbies(randomUtils.hobbies)
+                .setFirstName(data.firstName)
+                .setLastName(data.lastName)
+                .setEmail(data.email)
+                .setGender(data.gender)
+                .setUserNumber(data.userNumber)
+                .setDateOfBirth(data.birthDay, data.birthMonth, data.birthYear)
+                .setAddress(data.address)
+                .setHobbies(data.hobby)
                 .scrollToBottom()
                 .submitClick()
-                .checkResult("Student Name", randomUtils.firstName)
-                .checkResult("Student Email", randomUtils.userEmail)
-                .checkResult("Gender", randomUtils.gender)
-                .checkResult("Mobile", randomUtils.userNumber)
-                .checkResult("Date of Birth", randomUtils.checkDateOfBirth)
-                .checkResult("Hobbies", randomUtils.hobbies)
-                .checkResult("Address", randomUtils.streetAddress)
+                .checkResult("Student Name", data.firstName)
+                .checkResult("Student Email", data.email)
+                .checkResult("Gender", data.gender)
+                .checkResult("Mobile", data.userNumber)
+                .checkResult("Date of Birth", data.birthDay)
+                .checkResult("Hobbies", data.birthMonth)
+                .checkResult("Address", data.birthYear)
                 .closeModalWindow()
                 .modalWindowShouldNotExist();
     }
 
     @Test
     void shouldNotRegisterWithoutPhoneNumberTest() {
+        TestData data = new TestData();
         practiceFormPage
                 .openPage()
                 .removeBanners()
-                .setFirstName(randomUtils.firstName)
-                .setLastName(randomUtils.lastName)
-                .setEmail(randomUtils.userEmail)
-                .setGender(randomUtils.gender)
+                .setFirstName(data.firstName)
+                .setLastName(data.lastName)
+                .setEmail(data.email)
+                .setGender(data.gender)
                 .setUserNumber("")
-                .setDateOfBirth(randomUtils.birthDay, randomUtils.birthMonth, randomUtils.birthYear)
-                .setAddress(randomUtils.streetAddress)
-                .setHobbies(randomUtils.hobbies)
+                .setDateOfBirth(data.birthDay, data.birthMonth, data.birthYear)
+                .setAddress(data.address)
+                .setHobbies(data.hobby)
                 .scrollToBottom()
                 .submitClick()
                 .modalWindowShouldNotExist();
