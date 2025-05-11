@@ -114,7 +114,6 @@ public class PracticeFormPage {
     }
 
 
-
     public PracticeFormPage cityClick() {
         citySelect.click();
         return this;

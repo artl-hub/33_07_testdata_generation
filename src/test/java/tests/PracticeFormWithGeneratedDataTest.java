@@ -2,13 +2,11 @@ package tests;
 
 import org.junit.jupiter.api.Test;
 import pages.PracticeFormPage;
-import utils.RandomUtils;
 import utils.TestData;
 
 public class PracticeFormWithGeneratedDataTest extends TestBase {
 
     PracticeFormPage practiceFormPage = new PracticeFormPage();
-    RandomUtils randomUtils = new RandomUtils();
 
     @Test
     void successfulRegistrationTest() {

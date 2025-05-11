@@ -13,15 +13,10 @@ public class TestBase {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
-        Configuration.holdBrowserOpen = true;
     }
 
     @AfterEach
-    void closeBrowser(){
+    void closeBrowser() {
         closeWebDriver();
     }
-
-
-
-
 }
